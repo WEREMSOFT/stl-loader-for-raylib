@@ -1,5 +1,3 @@
-#include <pthread.h>
-#include <unistd.h>
 #include "raylib.h"
 
 #ifdef PI
@@ -23,17 +21,17 @@
 #include "utils/assets.h"
 #include "screens/game.h"
 
-#if defined(PLATFORM_WEB)
-#include <emscripten/emscripten.h>
-ecs_world_t *world;
-void game_update() {
-    ecs_progress(world, 0);
-}
-#endif
 
 ecs_world_t* screens[SCREEN_COUNT] = {0};
 
 GameContext game_context = {0};
+
+#if defined(PLATFORM_WEB)
+#include <emscripten/emscripten.h>
+void game_update() {
+    ecs_progress(game_context.world, 0);
+}
+#endif
 
 int main(int argc, char *argv[]) {
 
@@ -43,7 +41,6 @@ int main(int argc, char *argv[]) {
     for(int i = 0; i < SCREEN_COUNT; i++){
         screens[i] = ecs_init_w_args(argc, argv);
     }
-
 
     SetTargetFPS(60);
     game_context = init_game_context();

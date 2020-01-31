@@ -195,7 +195,7 @@ Module['FS_createPath']('/assets', 'dragon', true, true);
   }
 
  }
- loadPackage({"files": [{"start": 0, "audio": 0, "end": 194829, "filename": "/assets/dragon/dragon2.png"}, {"start": 194829, "audio": 0, "end": 199053, "filename": "/assets/dragon/NewDragon.atlas"}, {"start": 199053, "audio": 0, "end": 827590, "filename": "/assets/dragon/dragon.png"}, {"start": 827590, "audio": 0, "end": 860552, "filename": "/assets/dragon/NewDragon.json"}], "remote_package_size": 860552, "package_uuid": "eb5f15a2-9768-4f1a-8c1a-4a3fca3afd29"});
+ loadPackage({"files": [{"start": 0, "audio": 0, "end": 194829, "filename": "/assets/dragon/dragon2.png"}, {"start": 194829, "audio": 0, "end": 199053, "filename": "/assets/dragon/NewDragon.atlas"}, {"start": 199053, "audio": 0, "end": 827590, "filename": "/assets/dragon/dragon.png"}, {"start": 827590, "audio": 0, "end": 860552, "filename": "/assets/dragon/NewDragon.json"}], "remote_package_size": 860552, "package_uuid": "84b4d666-c1a2-4f1e-9148-bbb3de6a9a2b"});
 
 })();
 
@@ -1375,11 +1375,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5371072,
+    STACK_BASE = 5383616,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 128192,
-    DYNAMIC_BASE = 5371072,
-    DYNAMICTOP_PTR = 128032;
+    STACK_MAX = 140736,
+    DYNAMIC_BASE = 5383616,
+    DYNAMICTOP_PTR = 140576;
 
 
 
@@ -1795,7 +1795,7 @@ var ASM_CONSTS = {
 
 
 
-// STATICTOP = STATIC_BASE + 127168;
+// STATICTOP = STATIC_BASE + 139712;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -5450,7 +5450,7 @@ var ASM_CONSTS = {
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 128032;
+      return 140576;
     }
 
   
@@ -8949,16 +8949,16 @@ var ___wasm_call_ctors = Module["___wasm_call_ctors"] = function() {
   return Module["asm"]["__wasm_call_ctors"].apply(null, arguments)
 };
 
-var _main = Module["_main"] = function() {
-  return Module["asm"]["main"].apply(null, arguments)
-};
-
 var _malloc = Module["_malloc"] = function() {
   return Module["asm"]["malloc"].apply(null, arguments)
 };
 
 var _free = Module["_free"] = function() {
   return Module["asm"]["free"].apply(null, arguments)
+};
+
+var _main = Module["_main"] = function() {
+  return Module["asm"]["main"].apply(null, arguments)
 };
 
 var ___errno_location = Module["___errno_location"] = function() {
