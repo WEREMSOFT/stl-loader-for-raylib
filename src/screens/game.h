@@ -44,32 +44,22 @@ void pre_render(ecs_rows_t *rows) {
 }
 
 void post_render(ecs_rows_t *rows) {
+    GameContext *game_context = ecs_get_system_context(rows->world, rows->system);
+
     DrawFPS(10, 10);
-    if (GuiButton((Rectangle) {500, 20, 140, 30}, "Open Image")) { printf("otro click!!\n"); }
-    if (GuiButton((Rectangle) {20, 50, 140, 30}, GuiIconText(RICON_FILE_OPEN, "Open Image"))) printf("boton!!\n");
+    if (GuiButton((Rectangle) {20, 50, 140, 30}, "<< BACK TO MAIN MENU")) {
+        printf("otro click!!\n");
+        game_context->world = screens[SCREEN_MAIN_MENU];
+    }
 
-    GuiSetStyle(TEXTBOX, TEXT_ALIGNMENT, GUI_TEXT_ALIGN_CENTER);
-    //GuiSetStyle(VALUEBOX, TEXT_ALIGNMENT, GUI_TEXT_ALIGN_LEFT);
-
-    GuiSetStyle(BUTTON, TEXT_ALIGNMENT, GUI_TEXT_ALIGN_CENTER);
-
-    GuiGroupBox((Rectangle) {25, 110, 125, 150}, "STATES");
-    GuiSetState(GUI_STATE_NORMAL);
-    if (GuiButton((Rectangle) {30, 120, 115, 30}, "NORMAL")) {}
-    GuiSetState(GUI_STATE_FOCUSED);
-    if (GuiButton((Rectangle) {30, 155, 115, 30}, "FOCUSED")) {}
-    GuiSetState(GUI_STATE_PRESSED);
-    if (GuiButton((Rectangle) {30, 190, 115, 30}, "#15#PRESSED")) {}
-    GuiSetState(GUI_STATE_DISABLED);
-    if (GuiButton((Rectangle) {30, 225, 115, 30}, "DISABLED")) {}
-    GuiSetState(GUI_STATE_NORMAL);
-
-    GuiComboBox((Rectangle) {25, 470, 125, 30}, "ONE;TWO;THREE;FOUR", NULL);
+    if(IsKeyPressed(KEY_BACKSPACE)){
+        game_context->world = screens[SCREEN_MAIN_MENU];
+    }
 
     EndDrawing();
 }
 
-void render(ecs_rows_t *rows) {
+static void render_game(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, position, 1);
 
     for (int i = 0; i < rows->count; i++) {
@@ -91,19 +81,20 @@ void render_sp_assets(ecs_rows_t *rows) {
     }
 }
 
-void init_game_world(ecs_world_t *world, GameContext* game_context){
+void init_game_world(ecs_world_t *world, GameContext *game_context) {
     ECS_COMPONENT(world, Vector3);
     ECS_COMPONENT(world, sp_asset_t);
     ECS_TAG(world, Redereable);
 
     ECS_SYSTEM(world, pre_render, EcsOnUpdate, Redereable);
-    ECS_SYSTEM(world, render, EcsOnUpdate, Vector3, Redereable);
+    ECS_SYSTEM(world, render_game, EcsOnUpdate, Vector3, Redereable);
     ECS_SYSTEM(world, render_sp_assets, EcsOnUpdate, Vector3, sp_asset_t);
     ECS_SYSTEM(world, post_render, EcsOnUpdate, Redereable);
     ECS_SYSTEM(world, cube_init_position, EcsOnAdd, Vector3, Redereable);
     ECS_SYSTEM(world, sp_asset_init, EcsOnAdd, Vector3, sp_asset_t);
 
     ecs_set_system_context(world, pre_render, game_context);
+    ecs_set_system_context(world, post_render, game_context);
     ecs_set_system_context(world, sp_asset_init, &spine_assets[DRAGON]);
 
     ECS_ENTITY(world, cube, Vector3, Redereable);

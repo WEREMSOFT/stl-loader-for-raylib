@@ -19,10 +19,12 @@
 #include "utils/structs.h"
 #include "utils/common.h"
 #include "utils/assets.h"
-#include "screens/game.h"
-
 
 ecs_world_t* screens[SCREEN_COUNT] = {0};
+
+// Screens
+#include "screens/game.h"
+#include "screens/main_menu.h"
 
 GameContext game_context = {0};
 
@@ -46,8 +48,9 @@ int main(int argc, char *argv[]) {
     game_context = init_game_context();
 
      init_game_world(screens[SCREEN_GAME], &game_context);
+     init_main_menu_world(screens[SCREEN_MAIN_MENU], &game_context);
 
-     game_context.world = screens[SCREEN_GAME];
+     game_context.world = screens[SCREEN_MAIN_MENU];
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(game_update, 0, 1);
