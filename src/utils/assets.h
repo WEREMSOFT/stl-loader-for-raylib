@@ -52,7 +52,7 @@ static sp_asset_t sp_asset_create_dragon(char *json_path, char *atlas_path, char
 
 void init_assets() {
 //    spine_assets[DRAGON] = sp_asset_create_dragon("assets/dragon/NewDragon.json","assets/dragon/NewDragon.atlas", "flying");
-    spine_assets[HERO] = sp_asset_create_dragon("assets/hero/hero.json","assets/hero/hero.atlas", "run");
+    spine_assets[HERO] = sp_asset_create_dragon("assets/hero/hero.json","assets/hero/hero.atlas", "idle");
 }
 
 void destroy_assets() {
