@@ -119,7 +119,9 @@ Module.expectedDataFileDownloads++;
       if (!check) throw msg + new Error().stack;
     }
 Module['FS_createPath']('/', 'assets', true, true);
+Module['FS_createPath']('/assets', 'images', true, true);
 Module['FS_createPath']('/assets', 'dragon', true, true);
+Module['FS_createPath']('/assets', 'hero', true, true);
 
     function DataRequest(start, end, audio) {
       this.start = start;
@@ -195,7 +197,7 @@ Module['FS_createPath']('/assets', 'dragon', true, true);
   }
 
  }
- loadPackage({"files": [{"start": 0, "audio": 0, "end": 194829, "filename": "/assets/dragon/dragon2.png"}, {"start": 194829, "audio": 0, "end": 199053, "filename": "/assets/dragon/NewDragon.atlas"}, {"start": 199053, "audio": 0, "end": 827590, "filename": "/assets/dragon/dragon.png"}, {"start": 827590, "audio": 0, "end": 860552, "filename": "/assets/dragon/NewDragon.json"}], "remote_package_size": 860552, "package_uuid": "bf9f9b1c-8960-4b0a-88ec-dd7a352463db"});
+ loadPackage({"files": [{"start": 0, "audio": 0, "end": 55304, "filename": "/assets/images/enemy.png"}, {"start": 55304, "audio": 0, "end": 88839, "filename": "/assets/images/bush.png"}, {"start": 88839, "audio": 0, "end": 147581, "filename": "/assets/images/hero2.png"}, {"start": 147581, "audio": 0, "end": 216460, "filename": "/assets/images/treee.png"}, {"start": 216460, "audio": 0, "end": 259612, "filename": "/assets/images/hero1.png"}, {"start": 259612, "audio": 0, "end": 280057, "filename": "/assets/images/hog.png"}, {"start": 280057, "audio": 0, "end": 474886, "filename": "/assets/dragon/dragon2.png"}, {"start": 474886, "audio": 0, "end": 479110, "filename": "/assets/dragon/NewDragon.atlas"}, {"start": 479110, "audio": 0, "end": 1107647, "filename": "/assets/dragon/dragon.png"}, {"start": 1107647, "audio": 0, "end": 1140609, "filename": "/assets/dragon/NewDragon.json"}, {"start": 1140609, "audio": 0, "end": 1974012, "filename": "/assets/hero/hero.png"}, {"start": 1974012, "audio": 0, "end": 1976154, "filename": "/assets/hero/hero.atlas"}, {"start": 1976154, "audio": 0, "end": 1978115, "filename": "/assets/hero/hero.json"}], "remote_package_size": 1978115, "package_uuid": "8cb8abea-b58b-4ed3-bf24-16872f667595"});
 
 })();
 
@@ -775,8 +777,8 @@ var wasmMemory;
 // In the wasm backend, we polyfill the WebAssembly object,
 // so this creates a (non-native-wasm) table for us.
 var wasmTable = new WebAssembly.Table({
-  'initial': 284,
-  'maximum': 284 + 0,
+  'initial': 280,
+  'maximum': 280 + 0,
   'element': 'anyfunc'
 });
 
@@ -1375,11 +1377,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5381248,
+    STACK_BASE = 5381216,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 138368,
-    DYNAMIC_BASE = 5381248,
-    DYNAMICTOP_PTR = 138208;
+    STACK_MAX = 138336,
+    DYNAMIC_BASE = 5381216,
+    DYNAMICTOP_PTR = 138176;
 
 
 
@@ -1795,7 +1797,7 @@ var ASM_CONSTS = {
 
 
 
-// STATICTOP = STATIC_BASE + 137344;
+// STATICTOP = STATIC_BASE + 137312;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -5450,7 +5452,7 @@ var ASM_CONSTS = {
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 138208;
+      return 138176;
     }
 
   
