@@ -29,7 +29,7 @@ void init_bullets(ecs_rows_t *rows) {
         position[i].x = position[i].y = position[i].z = 0;
         velocities[i].x = velocities[i].y = velocities[i].z = 0;
         accelerations[i].x = accelerations[i].z = 0;
-        accelerations[i].y = 100;
+        accelerations[i].y = 200;
         states[i] = BULLET_STATE_IDLE;
     }
 }
@@ -74,6 +74,8 @@ static void render_bullets(ecs_rows_t *rows) {
     for (int i = 0; i < rows->count; i++) {
         DrawCube(position[i], 10.0f, 10.0f, 10.0f, CLITERAL(Color) {11, 110, 176, 255});
         DrawCubeWires(position[i], 10.0f, 10.0f, 10.0f, MAROON);
+        Vector3 shadow_position = {position[i].x, 0, position[i].z};
+        DrawCube(shadow_position,  10, 1, 10, CLITERAL(Color){0, 0, 0, 100});
     }
 }
 
@@ -101,6 +103,8 @@ void post_render(ecs_rows_t *rows) {
     if (GuiButton((Rectangle) {20, 50, 140, 30}, "<< BACK TO MAIN MENU")) {
         game_context->world = screens[SCREEN_MAIN_MENU];
     }
+
+    GuiDummyRec((Rectangle){SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 10, 10}, "");
 
     if (IsKeyPressed(KEY_BACKSPACE)) {
         game_context->world = screens[SCREEN_MAIN_MENU];
@@ -186,7 +190,7 @@ void update_bullets(ecs_rows_t *rows) {
                     states[i] = BULLET_STATE_TRAVELING;
                     float distance_to_target = Vector3Length(game_context->camera.target);
                     velocities[i] = Vector3Multiply(Vector3Normalize(game_context->camera.target), 50);
-                    velocities[i].y = -distance_to_target;
+                    velocities[i].y = -distance_to_target * 2;
                 }
                 break;
         }
