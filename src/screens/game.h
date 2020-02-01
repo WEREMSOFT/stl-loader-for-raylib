@@ -39,8 +39,8 @@ void init_hero(ecs_rows_t *rows) {
     ECS_COLUMN(rows, VectorVelocity3, velocities, 2);
 
     for (int i = 0; i < rows->count; i++) {
-        position[i].x = position[i].z = 0;
-        position[i].y = 35.0f;
+        position[i].x = position[i].y = position[i].z = 0;
+//        position[i].y = 35.0f;
         velocities[i].x = velocities[i].y = velocities[i].z = 100;
     }
 }
@@ -261,9 +261,9 @@ void init_game_world(ecs_world_t *world, game_context_t *game_context) {
     ecs_set_system_context(world, pre_render, game_context);
 
     ECS_SYSTEM(world, render_bullets, EcsOnUpdate, Vector3, tag_bullet);
-//    ECS_SYSTEM(world, render_sp_assets, EcsOnUpdate, Vector3, sp_asset_t);
-    ECS_SYSTEM(world, render_hero, EcsOnUpdate, Vector3, tag_hero);
-    ecs_set_system_context(world, render_hero, game_context);
+    ECS_SYSTEM(world, render_sp_assets, EcsOnUpdate, Vector3, sp_asset_t);
+//    ECS_SYSTEM(world, render_hero, EcsOnUpdate, Vector3, tag_hero);
+//    ecs_set_system_context(world, render_hero, game_context);
     ECS_SYSTEM(world, render_billboards, EcsOnUpdate, Vector3, tag_billboard);
     ecs_set_system_context(world, render_billboards, game_context);
 

@@ -1,118 +1,153 @@
 
 hero.png
-size: 512,128
+size: 2048,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-Belt
-  rotate: false
-  xy: 2, 2
-  size: 52, 28
-  orig: 52, 28
-  offset: 0, 0
-  index: -1
-arm L
-  rotate: false
-  xy: 266, 2
-  size: 46, 77
-  orig: 46, 77
-  offset: 0, 0
-  index: -1
-arm R
-  rotate: false
-  xy: 314, 3
-  size: 44, 76
-  orig: 44, 76
-  offset: 0, 0
-  index: -1
-body
+dead
   rotate: true
-  xy: 181, 60
-  size: 66, 83
-  orig: 66, 83
+  xy: 1602, 2
+  size: 161, 126
+  orig: 161, 126
   offset: 0, 0
   index: -1
-brow L
+hit
   rotate: false
-  xy: 151, 40
-  size: 16, 13
-  orig: 16, 13
+  xy: 1835, 47
+  size: 145, 227
+  orig: 145, 227
   offset: 0, 0
   index: -1
-brow R
-  rotate: false
-  xy: 56, 17
-  size: 16, 13
-  orig: 16, 13
-  offset: 0, 0
-  index: -1
-butt
-  rotate: false
-  xy: 375, 40
-  size: 45, 45
-  orig: 45, 45
-  offset: 0, 0
-  index: -1
-ear L
+idle
   rotate: true
-  xy: 474, 85
-  size: 41, 34
-  orig: 41, 34
+  xy: 1602, 165
+  size: 145, 231
+  orig: 145, 231
   offset: 0, 0
   index: -1
-ear R
+run_00
   rotate: false
-  xy: 90, 2
-  size: 46, 33
-  orig: 46, 33
+  xy: 2, 276
+  size: 198, 234
+  orig: 198, 234
   offset: 0, 0
   index: -1
-eyes close
+run_01
+  rotate: false
+  xy: 2, 40
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_02
+  rotate: false
+  xy: 202, 276
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_03
+  rotate: false
+  xy: 202, 40
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_04
+  rotate: false
+  xy: 402, 276
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_05
+  rotate: false
+  xy: 402, 40
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_06
+  rotate: false
+  xy: 602, 276
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_07
+  rotate: false
+  xy: 602, 40
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_08
+  rotate: false
+  xy: 802, 276
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_09
+  rotate: false
+  xy: 802, 40
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_10
+  rotate: false
+  xy: 1002, 276
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_11
+  rotate: false
+  xy: 1002, 40
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_12
+  rotate: false
+  xy: 1202, 276
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_13
+  rotate: false
+  xy: 1202, 40
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_14
+  rotate: false
+  xy: 1402, 276
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_15
+  rotate: false
+  xy: 1402, 40
+  size: 198, 234
+  orig: 198, 234
+  offset: 0, 0
+  index: -1
+run_16
   rotate: true
-  xy: 360, 21
-  size: 58, 13
-  orig: 58, 13
+  xy: 1602, 312
+  size: 198, 234
+  orig: 198, 234
   offset: 0, 0
   index: -1
-eyes open
+run_17
   rotate: false
-  xy: 90, 37
-  size: 59, 16
-  orig: 59, 16
-  offset: 0, 0
-  index: -1
-head
-  rotate: false
-  xy: 90, 55
-  size: 89, 71
-  orig: 89, 71
-  offset: 0, 0
-  index: -1
-leg L
-  rotate: true
-  xy: 266, 81
-  size: 45, 100
-  orig: 45, 100
-  offset: 0, 0
-  index: -1
-leg R
-  rotate: true
-  xy: 368, 87
-  size: 39, 104
-  orig: 39, 104
-  offset: 0, 0
-  index: -1
-mouth 1
-  rotate: false
-  xy: 138, 25
-  size: 9, 10
-  orig: 9, 10
-  offset: 0, 0
-  index: -1
-tail
-  rotate: false
-  xy: 2, 32
-  size: 86, 94
-  orig: 86, 94
+  xy: 1838, 276
+  size: 198, 234
+  orig: 198, 234
   offset: 0, 0
   index: -1

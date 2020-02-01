@@ -39,8 +39,8 @@ static sp_asset_t sp_asset_create_dragon(char *json_path, char *atlas_path, char
 
     spBone_setYDown(true);
     return_value.skeleton = spSkeleton_create(return_value.skeletonData);
-    return_value.skeleton->scaleX = 0.1;
-    return_value.skeleton->scaleY = -0.1;
+    return_value.skeleton->scaleX = 0.5;
+    return_value.skeleton->scaleY = -0.5;
 
     // Create the spAnimationStateData
     return_value.animationStateData = spAnimationStateData_create(return_value.skeletonData);
@@ -60,7 +60,7 @@ static sp_asset_t sp_asset_create_dragon(char *json_path, char *atlas_path, char
 
 void init_assets() {
 //    spine_assets[DRAGON] = sp_asset_create_dragon("assets/dragon/NewDragon.json","assets/dragon/NewDragon.atlas", "flying");
-    spine_assets[HERO] = sp_asset_create_dragon("assets/hero/hero.json","assets/hero/hero.atlas", "idle");
+    spine_assets[HERO] = sp_asset_create_dragon("assets/hero/hero.json","assets/hero/hero.atlas", "run");
     texture_assets[TEXTURES_TREE] = LoadTexture("assets/images/treee.png");
     texture_assets[TEXTURES_BUSH] = LoadTexture("assets/images/bush.png");
     texture_assets[TEXTURES_HERO] = LoadTexture("assets/images/hero1.png");
