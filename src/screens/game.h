@@ -37,23 +37,34 @@ void init_bullets(ecs_rows_t *rows) {
 void init_hero(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, position, 1);
     ECS_COLUMN(rows, VectorVelocity3, velocities, 2);
+    ECS_COLUMN(rows, sp_asset_t, sp_assets, 3);
 
     for (int i = 0; i < rows->count; i++) {
-        position[i].x = position[i].y = position[i].z = 0;
+        position[i] = (Vector3){0, 0, 0};
 //        position[i].y = 35.0f;
         velocities[i].x = velocities[i].y = velocities[i].z = 100;
+        sp_assets[i] = spine_assets[HERO];
     }
 }
 
-void init_sp_asset(ecs_rows_t *rows) {
+void init_enemy(ecs_rows_t *rows) {
+    ECS_COLUMN(rows, Vector3, positions, 1);
     ECS_COLUMN(rows, sp_asset_t, sp_assets, 2);
 
-    sp_asset_t *dragon = ecs_get_system_context(rows->world, rows->system);
-
     for (int i = 0; i < rows->count; i++) {
-        sp_assets[i] = *dragon;
+        positions[i] = (Vector3){0, 0, 0};
+        sp_assets[i] = spine_assets[DRAGON];
     }
 }
+
+void init_sp_asset_hero(ecs_rows_t *rows) {
+    ECS_COLUMN(rows, sp_asset_t, sp_assets, 2);
+
+    for (int i = 0; i < rows->count; i++) {
+        sp_assets[i] = spine_assets[HERO];
+    }
+}
+
 
 /**
  * Sets stuff like background color and camera. Starts the 3D mode.
@@ -85,11 +96,11 @@ static void render_bullets(ecs_rows_t *rows) {
 void render_sp_assets(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, position, 1);
     ECS_COLUMN(rows, sp_asset_t, assets, 2);
-    spAnimationState_update(assets[0].animationState, GetFrameTime());
-    spAnimationState_apply(assets[0].animationState, assets[0].skeleton);
-    spSkeleton_updateWorldTransform(assets[0].skeleton);
 
     for (int i = 0; i < rows->count; i++) {
+        spAnimationState_update(assets[i].animationState, GetFrameTime());
+        spAnimationState_apply(assets[i].animationState, assets[i].skeleton);
+        spSkeleton_updateWorldTransform(assets[i].skeleton);
         drawSkeleton(assets[i].skeleton, position[i]);
     }
 }
@@ -197,6 +208,7 @@ void update_bullets(ecs_rows_t *rows) {
                     velocities[i] = Vector3Multiply(velocities[i], 0);
                     positions[i] = Vector3Multiply(positions[i], 0);
                     states[i] = BULLET_STATE_IDLE;
+//                    _ecs_remove(rows->world, rows->entities[i], game_context->tag_bullet);
                 }
             }
                 break;
@@ -242,14 +254,16 @@ void init_game_world(ecs_world_t *world, game_context_t *game_context) {
     ECS_COMPONENT(world, state);
     ECS_TAG(world, tag_ui);
     ECS_TAG(world, tag_hero);
+    ECS_TAG(world, tag_enemy);
     ECS_TAG(world, tag_bullet);
     ECS_TAG(world, tag_billboard);
 
+    game_context->tag_bullet = tag_bullet;
+
     ECS_SYSTEM(world, init_bullets, EcsOnAdd, Vector3, VectorVelocity3, VectorAcceleration3, state, tag_bullet);
-    ECS_SYSTEM(world, init_hero, EcsOnAdd, Vector3, VectorVelocity3, tag_hero);
+    ECS_SYSTEM(world, init_hero, EcsOnAdd, Vector3, VectorVelocity3, sp_asset_t, tag_hero);
     ECS_SYSTEM(world, init_billboards, EcsOnAdd, Vector3, tag_billboard);
-    ECS_SYSTEM(world, init_sp_asset, EcsOnAdd, Vector3, sp_asset_t);
-    ecs_set_system_context(world, init_sp_asset, &spine_assets[HERO]);
+    ECS_SYSTEM(world, init_enemy, EcsOnAdd, Vector3, sp_asset_t, tag_enemy);
 
     ECS_SYSTEM(world, update_bullets, EcsOnUpdate, Vector3, VectorVelocity3, VectorAcceleration3, state, tag_bullet);
     ecs_set_system_context(world, update_bullets, game_context);
@@ -272,6 +286,7 @@ void init_game_world(ecs_world_t *world, game_context_t *game_context) {
     ecs_set_system_context(world, post_render, game_context);
 
     ECS_ENTITY(world, hero_t, Vector3, VectorVelocity3, sp_asset_t, Texture2D, tag_hero);
+    ECS_ENTITY(world, enemy_t, Vector3, VectorVelocity3, sp_asset_t, tag_enemy);
 
     ECS_TYPE(world, bullet_t, Vector3, VectorVelocity3, VectorAcceleration3, state, tag_bullet);
     ecs_new_w_count(world, bullet_t, 50);

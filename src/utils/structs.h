@@ -16,6 +16,7 @@ typedef struct game_context_t {
     Vector2 screen_size;
     Camera3D camera;
     ecs_world_t *world;
+    ecs_entity_t tag_bullet;
 } game_context_t;
 
 typedef struct sp_asset_t {
