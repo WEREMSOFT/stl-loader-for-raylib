@@ -17,9 +17,9 @@ game_context_t init_game_context() {
     return_value.screen_size.y = SCREEN_HEIGHT;
 
     // Define the camera to look into our 3d world
-    return_value.camera.position = (Vector3) {0.0f, -300.0f, 500.0f};
+    return_value.camera.position = (Vector3) {0.0f, 300.0f, 500.0f};
     return_value.camera.target = (Vector3) {0.0f, 0.0f, 0.0f};      // Camera looking at point
-    return_value.camera.up = (Vector3) {0.0f, -1.0f, 0.0f};          // Camera up vector (rotation towards target)
+    return_value.camera.up = (Vector3) {0.0f, 1.0f, 0.0f};          // Camera up vector (rotation towards target)
     return_value.camera.fovy = 45.0f;                                // Camera field-of-view Y
     return_value.camera.type = CAMERA_PERSPECTIVE;                   // Camera mode type
 
