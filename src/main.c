@@ -3,9 +3,9 @@
 #ifdef PI
 #undef PI
 #endif
-//#define SP_DRAW_DOUBLE_FACED
+#define SP_DRAW_DOUBLE_FACED
 
-#define SP_LAYER_SPACING 0
+#define SP_LAYER_SPACING .1
 #define SP_LAYER_SPACING_BASE 0
 #define RAYGUI_IMPLEMENTATION
 #define RAYGUI_SUPPORT_ICONS
