@@ -195,7 +195,7 @@ Module['FS_createPath']('/assets', 'dragon', true, true);
   }
 
  }
- loadPackage({"files": [{"start": 0, "audio": 0, "end": 194829, "filename": "/assets/dragon/dragon2.png"}, {"start": 194829, "audio": 0, "end": 199053, "filename": "/assets/dragon/NewDragon.atlas"}, {"start": 199053, "audio": 0, "end": 827590, "filename": "/assets/dragon/dragon.png"}, {"start": 827590, "audio": 0, "end": 860552, "filename": "/assets/dragon/NewDragon.json"}], "remote_package_size": 860552, "package_uuid": "c7a47601-24e4-4888-91b6-ca1c977af4dc"});
+ loadPackage({"files": [{"start": 0, "audio": 0, "end": 194829, "filename": "/assets/dragon/dragon2.png"}, {"start": 194829, "audio": 0, "end": 199053, "filename": "/assets/dragon/NewDragon.atlas"}, {"start": 199053, "audio": 0, "end": 827590, "filename": "/assets/dragon/dragon.png"}, {"start": 827590, "audio": 0, "end": 860552, "filename": "/assets/dragon/NewDragon.json"}], "remote_package_size": 860552, "package_uuid": "2ef84526-5ef8-4da9-ab93-1f5adf21c2bf"});
 
 })();
 
@@ -775,8 +775,8 @@ var wasmMemory;
 // In the wasm backend, we polyfill the WebAssembly object,
 // so this creates a (non-native-wasm) table for us.
 var wasmTable = new WebAssembly.Table({
-  'initial': 281,
-  'maximum': 281 + 0,
+  'initial': 282,
+  'maximum': 282 + 0,
   'element': 'anyfunc'
 });
 
@@ -1375,11 +1375,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5381024,
+    STACK_BASE = 5381152,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 138144,
-    DYNAMIC_BASE = 5381024,
-    DYNAMICTOP_PTR = 137984;
+    STACK_MAX = 138272,
+    DYNAMIC_BASE = 5381152,
+    DYNAMICTOP_PTR = 138112;
 
 
 
@@ -1795,7 +1795,7 @@ var ASM_CONSTS = {
 
 
 
-// STATICTOP = STATIC_BASE + 137120;
+// STATICTOP = STATIC_BASE + 137248;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -5450,7 +5450,7 @@ var ASM_CONSTS = {
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 137984;
+      return 138112;
     }
 
   

@@ -12,11 +12,11 @@ enum Sreens {
     SCREEN_COUNT
 };
 
-typedef struct GameContext {
+typedef struct game_context_t {
     Vector2 screen_size;
     Camera3D camera;
     ecs_world_t *world;
-} GameContext;
+} game_context_t;
 
 typedef struct sp_asset_t {
     spAtlas *atlas;

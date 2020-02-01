@@ -26,7 +26,7 @@ ecs_world_t* screens[SCREEN_COUNT] = {0};
 #include "screens/game.h"
 #include "screens/main_menu.h"
 
-GameContext game_context = {0};
+game_context_t game_context = {0};
 
 #if defined(PLATFORM_WEB)
 #include <emscripten/emscripten.h>
