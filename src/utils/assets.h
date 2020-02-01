@@ -7,20 +7,21 @@
 
 enum SpineAssets {
     DRAGON,
-    SPINE_ASSSETS_COUNT
+    SPINE_ASSSETS_COUNT,
+    HERO
 };
 
 sp_asset_t spine_assets[SPINE_ASSSETS_COUNT] = {0};
 
-static sp_asset_t sp_asset_create_dragon() {
+static sp_asset_t sp_asset_create_dragon(char *json_path, char *atlas_path, char *animation_name) {
 
     sp_asset_t return_value = {0};
 
     // Init spine
-    return_value.atlas = spAtlas_createFromFile("assets/dragon/NewDragon.atlas", 0);
+    return_value.atlas = spAtlas_createFromFile(atlas_path, 0);
     return_value.json = spSkeletonJson_create(return_value.atlas);
 
-    return_value.skeletonData = spSkeletonJson_readSkeletonDataFile(return_value.json, "assets/dragon/NewDragon.json");
+    return_value.skeletonData = spSkeletonJson_readSkeletonDataFile(return_value.json, json_path);
 
     if (!return_value.skeletonData) {
         printf("%s\n", return_value.json->error);
@@ -40,8 +41,8 @@ static sp_asset_t sp_asset_create_dragon() {
     int track = 0;
     int loop = 1;
     float delay = 0;
-    spAnimationState_addAnimationByName(return_value.animationState, track, "flying", loop, delay);
-    spAnimationState_addAnimationByName(return_value.animationState, 0, "flying", 1, 0);
+    spAnimationState_addAnimationByName(return_value.animationState, track, animation_name, loop, delay);
+    spAnimationState_addAnimationByName(return_value.animationState, 0, animation_name, 1, 0);
     spAnimationState_update(return_value.animationState, .0f);
     spAnimationState_apply(return_value.animationState, return_value.skeleton);
     spSkeleton_updateWorldTransform(return_value.skeleton);
@@ -50,7 +51,8 @@ static sp_asset_t sp_asset_create_dragon() {
 }
 
 void init_assets() {
-    spine_assets[DRAGON] = sp_asset_create_dragon();
+    spine_assets[DRAGON] = sp_asset_create_dragon("assets/dragon/NewDragon.json","assets/dragon/NewDragon.atlas", "flying");
+//    spine_assets[HERO] = sp_asset_create_dragon("assets/hero/hero.json","assets/dragon/hero.atlas", "run");
 }
 
 void destroy_assets() {

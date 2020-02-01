@@ -16,9 +16,14 @@ void init_bullets(ecs_rows_t *rows) {
     ECS_COLUMN(rows, VectorVelocity3, velocities, 2);
     ECS_COLUMN(rows, VectorAcceleration3, accelerations, 3);
 
+    float phase = 0;
+
     for (int i = 0; i < rows->count; i++) {
-        position[i].x = position[i].y = position[i].z = 0;
-        velocities[i].x = velocities[i].z = 0;
+        phase -= 20.0;
+        position[i].z = 0;
+        position[i].x = position[i].y = phase;
+        velocities[i].z = 0;
+        velocities[i].x = 50;
         velocities[i].y = -200;
         accelerations[i].x = accelerations[i].z = 0;
         accelerations[i].y = 200;
@@ -154,7 +159,15 @@ void update_bullets(ecs_rows_t *rows) {
 
         positions[i] = Vector3Add(positions[i], temp_velocity);
 
+        float temp_position_y = positions[i].y;
+
         positions[i].y = fmin(0, positions[i].y);
+
+        if(temp_position_y != positions[i].y) {
+            velocities[i].y = -200;
+            positions[i].y = -5;
+        }
+
     }
 }
 
