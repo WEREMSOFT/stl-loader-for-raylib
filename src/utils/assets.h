@@ -6,9 +6,9 @@
 #define RAYLIBTEST_ASSETS_H
 
 enum SpineAssets {
-    DRAGON,
+    HERO,
     SPINE_ASSSETS_COUNT,
-    HERO
+    DRAGON
 };
 
 sp_asset_t spine_assets[SPINE_ASSSETS_COUNT] = {0};
@@ -51,8 +51,8 @@ static sp_asset_t sp_asset_create_dragon(char *json_path, char *atlas_path, char
 }
 
 void init_assets() {
-    spine_assets[DRAGON] = sp_asset_create_dragon("assets/dragon/NewDragon.json","assets/dragon/NewDragon.atlas", "flying");
-//    spine_assets[HERO] = sp_asset_create_dragon("assets/hero/hero.json","assets/dragon/hero.atlas", "run");
+//    spine_assets[DRAGON] = sp_asset_create_dragon("assets/dragon/NewDragon.json","assets/dragon/NewDragon.atlas", "flying");
+    spine_assets[HERO] = sp_asset_create_dragon("assets/hero/hero.json","assets/hero/hero.atlas", "run");
 }
 
 void destroy_assets() {

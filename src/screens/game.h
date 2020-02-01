@@ -128,19 +128,19 @@ static void control_hero(ecs_rows_t *rows) {
 
     if (IsKeyDown(KEY_A)) {
         game_context->camera.position.x += 100 * rows->delta_time;
-        game_context->camera.target.x += 100 * rows->delta_time;
+//        game_context->camera.target.x += 100 * rows->delta_time;
     }
     if (IsKeyDown(KEY_D)) {
         game_context->camera.position.x -= 100 * rows->delta_time;
-        game_context->camera.target.x -= 100 * rows->delta_time;
+//        game_context->camera.target.x -= 100 * rows->delta_time;
     }
     if (IsKeyDown(KEY_W)) {
         game_context->camera.position.z -= 100 * rows->delta_time;
-        game_context->camera.target.z -= 100 * rows->delta_time;
+//        game_context->camera.target.z -= 100 * rows->delta_time;
     }
     if (IsKeyDown(KEY_S)) {
         game_context->camera.position.z += 100 * rows->delta_time;
-        game_context->camera.target.z += 100 * rows->delta_time;
+//        game_context->camera.target.z += 100 * rows->delta_time;
     }
 }
 
@@ -183,7 +183,7 @@ void init_game_world(ecs_world_t *world, game_context_t *game_context) {
     ECS_SYSTEM(world, init_bullets, EcsOnAdd, Vector3, VectorVelocity3, VectorAcceleration3, tag_bullet);
     ECS_SYSTEM(world, init_hero, EcsOnAdd, Vector3, VectorVelocity3, tag_hero);
     ECS_SYSTEM(world, init_sp_asset, EcsOnAdd, Vector3, sp_asset_t);
-    ecs_set_system_context(world, init_sp_asset, &spine_assets[DRAGON]);
+    ecs_set_system_context(world, init_sp_asset, &spine_assets[HERO]);
 
     ECS_SYSTEM(world, update_bullets, EcsOnUpdate, Vector3, VectorVelocity3, VectorAcceleration3);
 
