@@ -21,7 +21,7 @@ enum Textures {
 sp_asset_t spine_assets[SPINE_ASSSETS_COUNT] = {0};
 Texture2D texture_assets[TEXTURES_COUNT] = {0};
 
-static sp_asset_t sp_asset_create_dragon(char *json_path, char *atlas_path, char *animation_name) {
+static sp_asset_t create_sp_asset(char *json_path, char *atlas_path, char *animation_name) {
 
     sp_asset_t return_value = {0};
 
@@ -59,9 +59,9 @@ static sp_asset_t sp_asset_create_dragon(char *json_path, char *atlas_path, char
 }
 
 void init_assets() {
-//    spine_assets[DRAGON] = sp_asset_create_dragon("assets/dragon/NewDragon.json","assets/dragon/NewDragon.atlas", "flying");
-    spine_assets[HERO] = sp_asset_create_dragon("assets/hero/hero.json","assets/hero/hero.atlas", "run");
-    spine_assets[DRAGON] = sp_asset_create_dragon("assets/enemy/enemy.json","assets/enemy/enemy.atlas", "animation");
+//    spine_assets[DRAGON] = create_sp_asset("assets/dragon/NewDragon.json","assets/dragon/NewDragon.atlas", "flying");
+    spine_assets[HERO] = create_sp_asset("assets/hero/hero.json","assets/hero/hero.atlas", "run");
+    spine_assets[DRAGON] = create_sp_asset("assets/enemy/enemy.json","assets/enemy/enemy.atlas", "animation");
     texture_assets[TEXTURES_TREE] = LoadTexture("assets/images/treee.png");
     texture_assets[TEXTURES_BUSH] = LoadTexture("assets/images/bush.png");
     texture_assets[TEXTURES_HERO] = LoadTexture("assets/images/hero1.png");

@@ -17,6 +17,17 @@ enum bullet_state {
     BULLET_STATE_TRAVELING
 };
 
+void sp_set_animation(sp_asset_t *sp_asset, char *animation_name){
+    int track = 0;
+    int loop = 1;
+    float delay = 0;
+    spAnimationState_addAnimationByName(sp_asset->animationState, track, animation_name, loop, delay);
+    spAnimationState_addAnimationByName(sp_asset->animationState, 0, animation_name, 1, 0);
+    spAnimationState_update(sp_asset->animationState, .0f);
+    spAnimationState_apply(sp_asset->animationState, sp_asset->skeleton);
+    spSkeleton_updateWorldTransform(sp_asset->skeleton);
+}
+
 void init_bullets(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, position, 1);
     ECS_COLUMN(rows, VectorVelocity3, velocities, 2);
@@ -143,21 +154,35 @@ void post_render(ecs_rows_t *rows) {
 static void control_hero(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, positions, 1);
     ECS_COLUMN(rows, VectorVelocity3, velocities, 2);
+    ECS_COLUMN(rows, sp_asset_t, sp_assets, 3);
 
     game_context_t *game_context = ecs_get_system_context(rows->world, rows->system);
+
+    bool moved = false;
 
     for (int i = 0; i < rows->count; i++) {
         if (IsKeyDown(KEY_LEFT)) {
             positions[i].x -= velocities[i].x * rows->delta_time;
+            sp_assets[i].skeleton->scaleX = sp_assets[i].skeleton->scaleX > 0 ? -sp_assets[i].skeleton->scaleX : sp_assets[i].skeleton->scaleX;
+            moved = true;
         }
         if (IsKeyDown(KEY_RIGHT)) {
             positions[i].x += velocities[i].x * rows->delta_time;
+            sp_assets[i].skeleton->scaleX = sp_assets[i].skeleton->scaleX < 0 ? -sp_assets[i].skeleton->scaleX : sp_assets[i].skeleton->scaleX;
+            moved = true;
         }
         if (IsKeyDown(KEY_UP)) {
             positions[i].z -= velocities[i].z * rows->delta_time;
+            moved = true;
         }
         if (IsKeyDown(KEY_DOWN)) {
             positions[i].z += velocities[i].z * rows->delta_time;
+            moved = true;
+        }
+        if(!moved){
+            sp_set_animation(&sp_assets[i], "idle");
+        } else {
+            sp_set_animation(&sp_assets[i], "run");
         }
     }
 
@@ -268,7 +293,7 @@ void init_game_world(ecs_world_t *world, game_context_t *game_context) {
     ECS_SYSTEM(world, update_bullets, EcsOnUpdate, Vector3, VectorVelocity3, VectorAcceleration3, state, tag_bullet);
     ecs_set_system_context(world, update_bullets, game_context);
 
-    ECS_SYSTEM(world, control_hero, EcsOnUpdate, Vector3, VectorVelocity3, tag_hero);
+    ECS_SYSTEM(world, control_hero, EcsOnUpdate, Vector3, VectorVelocity3, sp_asset_t, tag_hero);
     ecs_set_system_context(world, control_hero, game_context);
 
     ECS_SYSTEM(world, pre_render, EcsOnUpdate, tag_ui);

@@ -37,7 +37,7 @@ void game_update() {
 
 int main(int argc, char *argv[]) {
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "raylib [core] example - 3d camera free");
+    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Game Jam 2020 Berlin - Rebuild");
     init_assets();
 
     for(int i = 0; i < SCREEN_COUNT; i++){
