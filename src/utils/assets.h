@@ -25,8 +25,14 @@ enum Textures {
     TEXTURES_COUNT
 };
 
+enum enum_model_assets {
+    MODEL_ASSETS_GROUND_TILE,
+    MODEL_ASSETS_COUNT,
+};
+
 sp_asset_t spine_assets[SPINE_ASSSETS_COUNT] = {0};
 Texture2D texture_assets[TEXTURES_COUNT] = {0};
+Model model_assets[MODEL_ASSETS_COUNT] = {0};
 // Load shader and set up some uniforms
 Shader shader;
 
@@ -84,6 +90,10 @@ void init_assets() {
     shader = LoadShader("assets/shaders/fog.vs", "assets/shaders/fog.fs");
     shader.locs[LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
     shader.locs[LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+
+    Mesh mesh = GenMeshCube(500, 5, 500);
+    model_assets[MODEL_ASSETS_GROUND_TILE] = LoadModelFromMesh(mesh);
+    model_assets[MODEL_ASSETS_GROUND_TILE].materials[0].maps[MAP_DIFFUSE].texture = texture_assets[TEXTURES_GRASS_4];
 }
 
 void destroy_assets() {
@@ -95,6 +105,11 @@ void destroy_assets() {
     for(int i = 0; i < TEXTURES_COUNT; i++){
         UnloadTexture(texture_assets[i]);
     }
+
+    for(int i = 0; i < MODEL_ASSETS_COUNT; i++){
+        UnloadModel(model_assets[i]);
+    }
+
     UnloadShader(shader);
 }
 

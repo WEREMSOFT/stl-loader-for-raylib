@@ -63,7 +63,7 @@ void init_enemy(ecs_rows_t *rows) {
     ECS_COLUMN(rows, sp_asset_t, sp_assets, 2);
 
     for (int i = 0; i < rows->count; i++) {
-        positions[i] = (Vector3) {0, 0, 0};
+        positions[i] = (Vector3) {GetRandomValue(500, 2000), 0, GetRandomValue(-100, 300)};
         sp_assets[i] = spine_assets[DRAGON];
     }
 }
@@ -108,7 +108,7 @@ void render_sp_assets(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, position, 1);
     ECS_COLUMN(rows, sp_asset_t, assets, 2);
 
-    for(int i = 0; i < SPINE_ASSSETS_COUNT; i++){
+    for (int i = 0; i < SPINE_ASSSETS_COUNT; i++) {
         spAnimationState_update(spine_assets[i].animationState, rows->delta_time / 2);
         spAnimationState_apply(spine_assets[i].animationState, spine_assets[i].skeleton);
         spSkeleton_updateWorldTransform(spine_assets[i].skeleton);
@@ -303,13 +303,13 @@ void update_bullets(ecs_rows_t *rows) {
 void init_billboards(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, positions, 1);
 
-    for (int i = 0; i < rows->count/2; i++) {
+    for (int i = 0; i < rows->count / 2; i++) {
         positions[i].x = GetRandomValue(0, 160) * 12;
         positions[i].z = GetRandomValue(-40, 40) + GetRandomValue(-3, 3) - 200;
         positions[i].y = 0;
     }
 
-    for (int i = rows->count/2; i < rows->count; i++) {
+    for (int i = rows->count / 2; i < rows->count; i++) {
         positions[i].x = GetRandomValue(0, 160) * 12;
         positions[i].z = GetRandomValue(-40, 40) + GetRandomValue(-3, 3) + 350;
         positions[i].y = 0;
@@ -326,7 +326,7 @@ void render_hero(ecs_rows_t *rows) {
     }
 }
 
-void init_terrain_tiles(ecs_rows_t *rows) {
+void init_ground_tiles(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, positions, 1);
 
     int tile_side = (int) sqrtf(rows->count);
@@ -336,20 +336,19 @@ void init_terrain_tiles(ecs_rows_t *rows) {
 
     for (int i = 0; i < tile_side; i++) {
         for (int j = 0; j < tile_side; j++) {
-            positions[position_index] = (Vector3) {j * tile_size, -5, i * tile_size};
+            positions[position_index] = (Vector3) {j * tile_size - 500, -5, i * tile_size - 50};
             position_index++;
         }
     }
 }
 
-void render_terrain_tiles(ecs_rows_t *rows) {
+void render_ground_tiles(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, positions, 1);
 
     int tile_size = 500;
 
     for (int i = 0; i < rows->count; i++) {
-        DrawCube(positions[i], tile_size, 5.0f, tile_size, DARKGREEN);
-        DrawCubeWires(positions[i], tile_size, 10.0f, tile_size, MAROON);
+        DrawModel(model_assets[MODEL_ASSETS_GROUND_TILE], positions[i], 1.0f, WHITE);
     }
 }
 
@@ -371,7 +370,7 @@ void init_game_world(ecs_world_t *world, game_context_t *game_context) {
     ECS_SYSTEM(world, init_hero, EcsOnAdd, Vector3, VectorVelocity3, sp_asset_t, tag_hero);
     ECS_SYSTEM(world, init_billboards, EcsOnAdd, Vector3, tag_billboard);
     ECS_SYSTEM(world, init_enemy, EcsOnAdd, Vector3, sp_asset_t, tag_enemy);
-    ECS_SYSTEM(world, init_terrain_tiles, EcsOnAdd, Vector3, tag_terrain_tile);
+    ECS_SYSTEM(world, init_ground_tiles, EcsOnAdd, Vector3, tag_terrain_tile);
 
     ECS_SYSTEM(world, update_bullets, EcsOnUpdate, Vector3, VectorVelocity3, VectorAcceleration3, state, tag_bullet);
     ecs_set_system_context(world, update_bullets, game_context);
@@ -381,7 +380,7 @@ void init_game_world(ecs_world_t *world, game_context_t *game_context) {
 
     ECS_SYSTEM(world, pre_render, EcsOnUpdate, tag_ui);
     ecs_set_system_context(world, pre_render, game_context);
-    ECS_SYSTEM(world, render_terrain_tiles, EcsOnUpdate, Vector3, tag_terrain_tile);
+    ECS_SYSTEM(world, render_ground_tiles, EcsOnUpdate, Vector3, tag_terrain_tile);
 
     ECS_SYSTEM(world, render_billboards_back, EcsOnUpdate, Vector3, tag_billboard);
     ecs_set_system_context(world, render_billboards_back, game_context);
