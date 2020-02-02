@@ -150,14 +150,6 @@ void render_billboards(ecs_rows_t *rows) {
             DrawBillboard(game_context->camera, texture_assets[TEXTURES_BUSH], positions_copy[i], 100.0f, WHITE);
         }
     }
-
-//    for(int i = 0; i < rows->count / 2; i++){
-//        DrawBillboard(game_context->camera, texture_assets[TEXTURES_TREE], positions_copy[i], 100.0f, WHITE);
-//    }
-//
-//    for(int i = rows->count / 2; i < rows->count; i++){
-//        DrawBillboard(game_context->camera, texture_assets[TEXTURES_BUSH], positions_copy[i], 50.0f, WHITE);
-//    }
 }
 
 /**
@@ -330,8 +322,6 @@ void init_game_world(ecs_world_t *world, game_context_t *game_context) {
     ECS_SYSTEM(world, render_bullets, EcsOnUpdate, Vector3, tag_bullet);
     ECS_SYSTEM(world, render_billboards, EcsOnUpdate, Vector3, tag_billboard);
     ECS_SYSTEM(world, render_sp_assets, EcsOnUpdate, Vector3, sp_asset_t);
-//    ECS_SYSTEM(world, render_hero, EcsOnUpdate, Vector3, tag_hero);
-//    ecs_set_system_context(world, render_hero, game_context);
     ecs_set_system_context(world, render_billboards, game_context);
 
 
