@@ -13,8 +13,13 @@ enum SpineAssets {
 
 enum Textures {
     TEXTURES_TREE,
+    TEXTURES_TREE2,
     TEXTURES_BUSH,
     TEXTURES_HERO,
+    TEXTURES_GRASS_1,
+    TEXTURES_GRASS_2,
+    TEXTURES_GRASS_3,
+    TEXTURES_GRASS_4,
     TEXTURES_COUNT
 };
 
@@ -65,8 +70,13 @@ void init_assets() {
     spine_assets[HERO] = create_sp_asset("assets/hero/hero.json","assets/hero/hero.atlas", "run");
     spine_assets[DRAGON] = create_sp_asset("assets/enemy/enemy.json","assets/enemy/enemy.atlas", "animation");
     texture_assets[TEXTURES_TREE] = LoadTexture("assets/images/treee.png");
+    texture_assets[TEXTURES_TREE2] = LoadTexture("assets/images/tree2.png");
     texture_assets[TEXTURES_BUSH] = LoadTexture("assets/images/bush.png");
     texture_assets[TEXTURES_HERO] = LoadTexture("assets/images/hero1.png");
+    texture_assets[TEXTURES_GRASS_1] = LoadTexture("assets/images/grass1.png");
+    texture_assets[TEXTURES_GRASS_2] = LoadTexture("assets/images/grass2.png");
+    texture_assets[TEXTURES_GRASS_3] = LoadTexture("assets/images/grass3.png");
+    texture_assets[TEXTURES_GRASS_4] = LoadTexture("assets/images/grass4.png");
 
     shader = LoadShader("assets/shaders/fog.vs", "assets/shaders/fog.fs");
     shader.locs[LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
