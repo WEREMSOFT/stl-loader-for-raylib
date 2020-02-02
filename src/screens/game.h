@@ -209,24 +209,32 @@ static void control_hero(ecs_rows_t *rows) {
 
     bool moved = false;
 
+
+//    if(IsGamepadAvailable(GAMEPAD_PLAYER1)){
+//        if (IsGamepadButtonDown(GAMEPAD_PLAYER1, GAMEPAD_BUTTON_LEFT_FACE_DOWN)) DrawRectangle(225, 132 + 54, 24, 30, RED);
+//        if (IsGamepadButtonDown(GAMEPAD_PLAYER1, GAMEPAD_BUTTON_LEFT_FACE_LEFT)) DrawRectangle(195, 161, 30, 25, RED);
+//        if (IsGamepadButtonDown(GAMEPAD_PLAYER1, GAMEPAD_BUTTON_LEFT_FACE_RIGHT)) DrawRectangle(195 + 54, 161, 30, 25, RED);
+//    }
+
+
     for (int i = 0; i < rows->count; i++) {
-        if (IsKeyDown(KEY_LEFT)) {
+        if (IsKeyDown(KEY_LEFT) || IsGamepadButtonDown(GAMEPAD_PLAYER1, GAMEPAD_BUTTON_LEFT_FACE_LEFT)) {
             positions[i].x -= velocities[i].x * rows->delta_time;
             sp_assets[i].skeleton->scaleX =
                     sp_assets[i].skeleton->scaleX > 0 ? -sp_assets[i].skeleton->scaleX : sp_assets[i].skeleton->scaleX;
             moved = true;
         }
-        if (IsKeyDown(KEY_RIGHT)) {
+        if (IsKeyDown(KEY_RIGHT) || IsGamepadButtonDown(GAMEPAD_PLAYER1, GAMEPAD_BUTTON_LEFT_FACE_RIGHT)) {
             positions[i].x += velocities[i].x * rows->delta_time;
             sp_assets[i].skeleton->scaleX =
                     sp_assets[i].skeleton->scaleX < 0 ? -sp_assets[i].skeleton->scaleX : sp_assets[i].skeleton->scaleX;
             moved = true;
         }
-        if (IsKeyDown(KEY_UP)) {
+        if (IsKeyDown(KEY_UP) || IsGamepadButtonDown(GAMEPAD_PLAYER1, GAMEPAD_BUTTON_LEFT_FACE_UP)) {
             positions[i].z -= velocities[i].z * rows->delta_time;
             moved = true;
         }
-        if (IsKeyDown(KEY_DOWN)) {
+        if (IsKeyDown(KEY_DOWN) || IsGamepadButtonDown(GAMEPAD_PLAYER1, GAMEPAD_BUTTON_LEFT_FACE_DOWN)) {
             positions[i].z += velocities[i].z * rows->delta_time;
             moved = true;
         }
@@ -237,19 +245,19 @@ static void control_hero(ecs_rows_t *rows) {
         }
     }
 
-    if (IsKeyDown(KEY_A)) {
+    if (IsKeyDown(KEY_A) || IsGamepadButtonDown(GAMEPAD_PLAYER2, GAMEPAD_BUTTON_LEFT_FACE_LEFT)) {
         game_context->camera.position.x -= 100 * rows->delta_time;
         game_context->camera.target.x -= 100 * rows->delta_time;
     }
-    if (IsKeyDown(KEY_D)) {
+    if (IsKeyDown(KEY_D) || IsGamepadButtonDown(GAMEPAD_PLAYER2, GAMEPAD_BUTTON_LEFT_FACE_RIGHT)) {
         game_context->camera.position.x += 100 * rows->delta_time;
         game_context->camera.target.x += 100 * rows->delta_time;
     }
-    if (IsKeyDown(KEY_W)) {
+    if (IsKeyDown(KEY_W) || IsGamepadButtonDown(GAMEPAD_PLAYER2, GAMEPAD_BUTTON_LEFT_FACE_UP)) {
         game_context->camera.position.z -= 100 * rows->delta_time;
         game_context->camera.target.z -= 100 * rows->delta_time;
     }
-    if (IsKeyDown(KEY_S)) {
+    if (IsKeyDown(KEY_S) || IsGamepadButtonDown(GAMEPAD_PLAYER2, GAMEPAD_BUTTON_LEFT_FACE_DOWN)) {
         game_context->camera.position.z += 100 * rows->delta_time;
         game_context->camera.target.z += 100 * rows->delta_time;
     }
@@ -288,7 +296,7 @@ void update_bullets(ecs_rows_t *rows) {
             }
                 break;
             case BULLET_STATE_IDLE:
-                if (IsKeyPressed(KEY_SPACE) && !already_shot) {
+                if ((IsKeyPressed(KEY_SPACE)  || IsGamepadButtonReleased(GAMEPAD_PLAYER2, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT)) && !already_shot) {
                     already_shot = true;
                     states[i] = BULLET_STATE_TRAVELING;
                     float distance_to_target = Vector3Length(game_context->camera.target);
