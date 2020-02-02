@@ -66,7 +66,6 @@ static sp_asset_t create_sp_asset(char *json_path, char *atlas_path, char *anima
 }
 
 void init_assets() {
-//    spine_assets[DRAGON] = create_sp_asset("assets/dragon/NewDragon.json","assets/dragon/NewDragon.atlas", "flying");
     spine_assets[HERO] = create_sp_asset("assets/hero/hero.json","assets/hero/hero.atlas", "run");
     spine_assets[DRAGON] = create_sp_asset("assets/enemy/enemy.json","assets/enemy/enemy.atlas", "animation");
     texture_assets[TEXTURES_TREE] = LoadTexture("assets/images/treee.png");

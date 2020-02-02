@@ -5,7 +5,9 @@
 #ifndef RAYLIBTEST_STRUCTS_H
 #define RAYLIBTEST_STRUCTS_H
 
-enum Sreens {
+
+
+enum enum_sreens {
     SCREEN_MAIN_MENU,
     SCREEN_TUTORIAL,
     SCREEN_GAME,
