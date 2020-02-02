@@ -20,6 +20,8 @@ enum Textures {
 
 sp_asset_t spine_assets[SPINE_ASSSETS_COUNT] = {0};
 Texture2D texture_assets[TEXTURES_COUNT] = {0};
+// Load shader and set up some uniforms
+Shader shader;
 
 static sp_asset_t create_sp_asset(char *json_path, char *atlas_path, char *animation_name) {
 
@@ -65,6 +67,10 @@ void init_assets() {
     texture_assets[TEXTURES_TREE] = LoadTexture("assets/images/treee.png");
     texture_assets[TEXTURES_BUSH] = LoadTexture("assets/images/bush.png");
     texture_assets[TEXTURES_HERO] = LoadTexture("assets/images/hero1.png");
+
+    shader = LoadShader("assets/shaders/fog.vs", "assets/shaders/fog.fs");
+    shader.locs[LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");
+    shader.locs[LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 }
 
 void destroy_assets() {
@@ -76,6 +82,7 @@ void destroy_assets() {
     for(int i = 0; i < TEXTURES_COUNT; i++){
         UnloadTexture(texture_assets[i]);
     }
+    UnloadShader(shader);
 }
 
 #endif //RAYLIBTEST_ASSETS_H

@@ -20,12 +20,12 @@ enum bullet_state {
 void sp_set_animation(sp_asset_t *sp_asset, char *animation_name){
     int track = 0;
     int loop = 1;
-    float delay = 0;
-    spAnimationState_addAnimationByName(sp_asset->animationState, track, animation_name, loop, delay);
-    spAnimationState_addAnimationByName(sp_asset->animationState, 0, animation_name, 1, 0);
-    spAnimationState_update(sp_asset->animationState, .0f);
-    spAnimationState_apply(sp_asset->animationState, sp_asset->skeleton);
-    spSkeleton_updateWorldTransform(sp_asset->skeleton);
+
+    spTrackEntry *te = spAnimationState_getCurrent(sp_asset->animationState, track);
+
+    if(strncmp(animation_name, te->animation->name, 30) != 0){
+        spAnimationState_setAnimationByName(sp_asset->animationState, track, animation_name, loop);
+    }
 }
 
 void init_bullets(ecs_rows_t *rows) {
@@ -116,17 +116,48 @@ void render_sp_assets(ecs_rows_t *rows) {
     }
 }
 
+int compare_vectors_3(const void *vector_a, const void *vector_b){
+    Vector3 *va, *vb;
+    int a, b;
+
+    va = ((Vector3*)vector_a);
+    vb = ((Vector3*)vector_b);
+
+    a = (int)100.f*va->z;
+    b = (int)100.f*vb->z;
+
+    return a - b;
+}
+
 void render_billboards(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, positions, 1);
     game_context_t *game_context = ecs_get_system_context(rows->world, rows->system);
 
-    for(int i = 0; i < rows->count / 2; i++){
-        DrawBillboard(game_context->camera, texture_assets[TEXTURES_TREE], positions[i], 50.0f, WHITE);
+    Vector3 positions_copy[rows->count];
+
+    for(int i = 0; i < rows->count; i++){
+        positions_copy[i] = positions[i];
     }
 
-    for(int i = rows->count / 2; i < rows->count; i++){
-        DrawBillboard(game_context->camera, texture_assets[TEXTURES_BUSH], positions[i], 50.0f, WHITE);
+    qsort(positions_copy,  rows->count, sizeof(Vector3), compare_vectors_3);
+
+    for(int i = 0; i < rows->count; i++){
+        if(i % 2) {
+            positions_copy[i].y += 90.0;
+            DrawBillboard(game_context->camera, texture_assets[TEXTURES_TREE], positions_copy[i], 100.0f, WHITE);
+        } else {
+            positions_copy[i].y += 30.0;
+            DrawBillboard(game_context->camera, texture_assets[TEXTURES_BUSH], positions_copy[i], 100.0f, WHITE);
+        }
     }
+
+//    for(int i = 0; i < rows->count / 2; i++){
+//        DrawBillboard(game_context->camera, texture_assets[TEXTURES_TREE], positions_copy[i], 100.0f, WHITE);
+//    }
+//
+//    for(int i = rows->count / 2; i < rows->count; i++){
+//        DrawBillboard(game_context->camera, texture_assets[TEXTURES_BUSH], positions_copy[i], 50.0f, WHITE);
+//    }
 }
 
 /**
@@ -233,7 +264,6 @@ void update_bullets(ecs_rows_t *rows) {
                     velocities[i] = Vector3Multiply(velocities[i], 0);
                     positions[i] = Vector3Multiply(positions[i], 0);
                     states[i] = BULLET_STATE_IDLE;
-//                    _ecs_remove(rows->world, rows->entities[i], game_context->tag_bullet);
                 }
             }
                 break;
@@ -254,9 +284,9 @@ void init_billboards(ecs_rows_t *rows){
     ECS_COLUMN(rows, Vector3, positions, 1);
 
     for(int i = 0; i < rows->count; i++){
-        positions[i].x = GetRandomValue(0, 2000);
-        positions[i].z = GetRandomValue(-500, 500);
-        positions[i].y = 43;
+        positions[i].x = GetRandomValue(0, 160) * 12;
+        positions[i].z = GetRandomValue(-20, 20) * 25 + GetRandomValue(-3, 3);
+        positions[i].y = 0;
     }
 }
 
@@ -283,8 +313,6 @@ void init_game_world(ecs_world_t *world, game_context_t *game_context) {
     ECS_TAG(world, tag_bullet);
     ECS_TAG(world, tag_billboard);
 
-    game_context->tag_bullet = tag_bullet;
-
     ECS_SYSTEM(world, init_bullets, EcsOnAdd, Vector3, VectorVelocity3, VectorAcceleration3, state, tag_bullet);
     ECS_SYSTEM(world, init_hero, EcsOnAdd, Vector3, VectorVelocity3, sp_asset_t, tag_hero);
     ECS_SYSTEM(world, init_billboards, EcsOnAdd, Vector3, tag_billboard);
@@ -300,10 +328,10 @@ void init_game_world(ecs_world_t *world, game_context_t *game_context) {
     ecs_set_system_context(world, pre_render, game_context);
 
     ECS_SYSTEM(world, render_bullets, EcsOnUpdate, Vector3, tag_bullet);
+    ECS_SYSTEM(world, render_billboards, EcsOnUpdate, Vector3, tag_billboard);
     ECS_SYSTEM(world, render_sp_assets, EcsOnUpdate, Vector3, sp_asset_t);
 //    ECS_SYSTEM(world, render_hero, EcsOnUpdate, Vector3, tag_hero);
 //    ecs_set_system_context(world, render_hero, game_context);
-    ECS_SYSTEM(world, render_billboards, EcsOnUpdate, Vector3, tag_billboard);
     ecs_set_system_context(world, render_billboards, game_context);
 
 
