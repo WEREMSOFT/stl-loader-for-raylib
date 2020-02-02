@@ -20,6 +20,8 @@ enum Textures {
     TEXTURES_GRASS_2,
     TEXTURES_GRASS_3,
     TEXTURES_GRASS_4,
+    TEXTURES_OPENING_SCREEN,
+    TEXTURES_SKY,
     TEXTURES_COUNT
 };
 
@@ -76,6 +78,8 @@ void init_assets() {
     texture_assets[TEXTURES_GRASS_2] = LoadTexture("assets/images/grass2.png");
     texture_assets[TEXTURES_GRASS_3] = LoadTexture("assets/images/grass3.png");
     texture_assets[TEXTURES_GRASS_4] = LoadTexture("assets/images/grass4.png");
+    texture_assets[TEXTURES_OPENING_SCREEN] = LoadTexture("assets/images/open-screen.png");
+    texture_assets[TEXTURES_SKY] = LoadTexture("assets/images/sky.png");
 
     shader = LoadShader("assets/shaders/fog.vs", "assets/shaders/fog.fs");
     shader.locs[LOC_MATRIX_MODEL] = GetShaderLocation(shader, "matModel");

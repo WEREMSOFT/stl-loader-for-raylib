@@ -14,15 +14,15 @@ static void render_main_menu(ecs_rows_t *rows) {
     game_context_t *game_context = ecs_get_system_context(rows->world, rows->system);
     BeginDrawing();
     ClearBackground(RAYWHITE);
+    DrawTexture(texture_assets[TEXTURES_OPENING_SCREEN], 0, 0, WHITE);
     DrawFPS(10, 10);
     if (GuiButton((Rectangle) {
-                          game_context->screen_size.x / 2,
+                          1000,
                           game_context->screen_size.y / 2,
                           140,
                           100
                   },
                   "START")) {
-        printf("start click!!\n");
         game_context->world = screens[SCREEN_GAME];
     }
 
