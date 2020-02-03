@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
     SetTargetFPS(60);
     game_context = init_game_context();
 
-     init_game_world(screens[SCREEN_GAME], &game_context);
+    game_world_init(screens[SCREEN_GAME], &game_context);
      init_main_menu_world(screens[SCREEN_MAIN_MENU], &game_context);
 
      game_context.world = screens[SCREEN_MAIN_MENU];
