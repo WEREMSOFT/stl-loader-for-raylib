@@ -10,16 +10,6 @@
 #include "game/bullets.h"
 #include "game/hero.h"
 
-void init_enemy(ecs_rows_t *rows) {
-    ECS_COLUMN(rows, Vector3, positions, 1);
-    ECS_COLUMN(rows, sp_asset_t, sp_assets, 2);
-
-    for (int i = 0; i < rows->count; i++) {
-        positions[i] = (Vector3) {GetRandomValue(500, 2000), 0, GetRandomValue(-100, 300)};
-        sp_assets[i] = spine_assets[DRAGON];
-    }
-}
-
 /**
  * Sets stuff like background color and camera. Starts the 3D mode.
  * @param rows
@@ -190,15 +180,29 @@ void game_world_init(ecs_world_t *world, game_context_t *game_context) {
     ECS_SYSTEM(world, bullets_init, EcsOnAdd, Vector3, VectorVelocity3, VectorAcceleration3, tag_bullet_idle);
     ECS_SYSTEM(world, hero_init, EcsOnAdd, Vector3, VectorVelocity3, sp_asset_t, tag_hero);
     ECS_SYSTEM(world, billboards_init, EcsOnAdd, Vector3, tag_billboard);
-    ECS_SYSTEM(world, init_enemy, EcsOnAdd, Vector3, sp_asset_t, tag_enemy);
+    ECS_SYSTEM(world, enemy_init, EcsOnAdd, Vector3, sp_asset_t, tag_enemy);
     ECS_SYSTEM(world, ground_tiles_init, EcsOnAdd, Vector3, tag_terrain_tile);
 
-    ECS_SYSTEM(world, bullets_flying_update, EcsOnUpdate, Vector3, VectorVelocity3, VectorAcceleration3,
-               tag_bullet_flying, .tag_bullet_idle);
+    ECS_SYSTEM(world,
+            bullets_flying_update,
+            EcsOnUpdate,
+            Vector3,
+            VectorVelocity3,
+            VectorAcceleration3,
+            tag_bullet_flying,
+            .tag_bullet_idle);
+
     ecs_set_system_context(world, bullets_flying_update, game_context);
 
-    ECS_SYSTEM(world, bullets_idle_update, EcsOnUpdate, Vector3, VectorVelocity3, VectorAcceleration3,
-               tag_bullet_idle, .tag_bullet_flying);
+    ECS_SYSTEM(world,
+            bullets_idle_update,
+            EcsOnUpdate,
+            Vector3,
+            VectorVelocity3,
+            VectorAcceleration3,
+            tag_bullet_idle,
+            .tag_bullet_flying);
+
     ecs_set_system_context(world, bullets_idle_update, game_context);
 
 

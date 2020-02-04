@@ -5,6 +5,8 @@
 #ifndef RAYLIBTEST_HERO_H
 #define RAYLIBTEST_HERO_H
 
+#include "../../utils/spine_utils.h"
+
 void hero_init(ecs_rows_t *rows) {
     ECS_COLUMN(rows, Vector3, position, 1);
     ECS_COLUMN(rows, VectorVelocity3, velocities, 2);
@@ -16,7 +18,6 @@ void hero_init(ecs_rows_t *rows) {
         sp_assets[i] = spine_assets[HERO];
     }
 }
-
 
 void hero_sp_asset_init(ecs_rows_t *rows) {
     ECS_COLUMN(rows, sp_asset_t, sp_assets, 2);
@@ -78,6 +79,16 @@ void hero_controls_update(ecs_rows_t *rows) {
     if (IsKeyDown(KEY_S) || IsGamepadButtonDown(GAMEPAD_PLAYER2, GAMEPAD_BUTTON_LEFT_FACE_DOWN)) {
         game_context->camera.position.z += 100 * rows->delta_time;
         game_context->camera.target.z += 100 * rows->delta_time;
+    }
+}
+
+void enemy_init(ecs_rows_t *rows) {
+    ECS_COLUMN(rows, Vector3, positions, 1);
+    ECS_COLUMN(rows, sp_asset_t, sp_assets, 2);
+
+    for (int i = 0; i < rows->count; i++) {
+        positions[i] = (Vector3) {GetRandomValue(500, 2000), 0, GetRandomValue(-100, 300)};
+        sp_assets[i] = spine_assets[DRAGON];
     }
 }
 
