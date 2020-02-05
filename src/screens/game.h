@@ -41,7 +41,7 @@ void spine_assets_render(ecs_rows_t *rows) {
     }
 }
 
-int vectors_3_compare(const void *vector_a, const void *vector_b) {
+int vectors_3_compare_z(const void *vector_a, const void *vector_b) {
     Vector3 *va, *vb;
     int a, b;
 
@@ -50,6 +50,19 @@ int vectors_3_compare(const void *vector_a, const void *vector_b) {
 
     a = (int) 100.f * va->z;
     b = (int) 100.f * vb->z;
+
+    return a - b;
+}
+
+int rendereables_compare_z(const void *rendereable_a, const void *rendereable_b) {
+    rendereable_t *va, *vb;
+    int a, b;
+
+    va = ((rendereable_t *) rendereable_a);
+    vb = ((rendereable_t *) rendereable_b);
+
+    a = (int) 100.f * va->position.z;
+    b = (int) 100.f * vb->position.z;
 
     return a - b;
 }
@@ -64,7 +77,7 @@ void billboards_back_render(ecs_rows_t *rows) {
         positions_copy[i] = positions[i];
     }
 
-    qsort(positions_copy, rows->count, sizeof(Vector3), vectors_3_compare);
+    qsort(positions_copy, rows->count, sizeof(Vector3), vectors_3_compare_z);
 
     for (int i = 0; i < rows->count / 2; i++) {
         if (i % 2) {
@@ -87,7 +100,7 @@ void billboards_front_render(ecs_rows_t *rows) {
         positions_copy[i] = positions[i];
     }
 
-    qsort(positions_copy, rows->count, sizeof(Vector3), vectors_3_compare);
+    qsort(positions_copy, rows->count, sizeof(Vector3), vectors_3_compare_z);
 
     for (int i = rows->count / 2; i < rows->count; i++) {
         if (i % 2) {
@@ -164,12 +177,63 @@ void ground_tiles_render(ecs_rows_t *rows) {
     }
 }
 
+void sp_assets_animation_update(ecs_rows_t *rows){
+    for (int i = 0; i < SPINE_ASSSETS_COUNT; i++) {
+        spAnimationState_update(spine_assets[i].animationState, rows->delta_time / 2);
+        spAnimationState_apply(spine_assets[i].animationState, spine_assets[i].skeleton);
+        spSkeleton_updateWorldTransform(spine_assets[i].skeleton);
+    }
+}
+
+void rendereables_render(ecs_rows_t *rows){
+    ECS_COLUMN(rows, rendereable_t, rendereables, 1);
+
+    rendereable_t rendereables_copy[rows->count];
+
+    for (int i = 0; i < rows->count; i++) {
+        rendereables_copy[i] = rendereables[i];
+        printf("positcion: %.2f\n", rendereables_copy[i].position.z);
+    }
+
+    qsort(rendereables_copy, rows->count, sizeof(rendereable_t), rendereables_compare_z);
+
+    for (int i = 0; i < rows->count; i++) {
+        printf("positcion: %.2f\n", rendereables_copy[i].position.z);
+    }
+
+    printf("##begin\n");
+
+    for(int i = 0; i < rows->count; i++){
+        switch(rendereables_copy[i].asset_type) {
+            case ASSET_TYPE_HERO:
+                printf("rendering hero\n");
+                drawSkeleton(((sp_asset_t *)rendereables_copy[i].asset)->skeleton, rendereables_copy[i].position);
+                break;
+            case ASSET_TYPE_ENEMY:
+                printf("rendering enemy\n");
+                drawSkeleton(((sp_asset_t *)rendereables_copy[i].asset)->skeleton, rendereables_copy[i].position);
+                break;
+            case ASSET_TYPE_BUSH:
+                printf("rendering bush\n");
+                break;
+            case ASSET_TYPE_TREE_1:
+                printf("rendering tree 1\n");
+                break;
+        }
+    }
+    printf("##end\n");
+}
+
 void game_world_init(ecs_world_t *world, game_context_t *game_context) {
+    // --- Create Components
     ECS_COMPONENT(world, Vector3);
     ECS_COMPONENT(world, VectorVelocity3);
     ECS_COMPONENT(world, VectorAcceleration3);
     ECS_COMPONENT(world, sp_asset_t);
     ECS_COMPONENT(world, Texture2D);
+    ECS_COMPONENT(world, rendereable_t);
+
+    // --- Create Tags
     ECS_TAG(world, tag_hero);
     ECS_TAG(world, tag_enemy);
     ECS_TAG(world, tag_bullet_flying);
@@ -177,11 +241,41 @@ void game_world_init(ecs_world_t *world, game_context_t *game_context) {
     ECS_TAG(world, tag_billboard);
     ECS_TAG(world, tag_terrain_tile);
 
+    // --- Initializers
     ECS_SYSTEM(world, bullets_init, EcsOnAdd, Vector3, VectorVelocity3, VectorAcceleration3, tag_bullet_idle);
-    ECS_SYSTEM(world, hero_init, EcsOnAdd, Vector3, VectorVelocity3, sp_asset_t, tag_hero);
+    ECS_SYSTEM(world, rendereables_init, EcsOnAdd, rendereable_t, .tag_hero, .tag_enemy);
+//    ECS_SYSTEM(world, hero_init, EcsOnAdd, rendereable_t, tag_hero);
+//    ECS_SYSTEM(world, enemy_init, EcsOnAdd, rendereable_t, tag_enemy);
     ECS_SYSTEM(world, billboards_init, EcsOnAdd, Vector3, tag_billboard);
-    ECS_SYSTEM(world, enemy_init, EcsOnAdd, Vector3, sp_asset_t, tag_enemy);
     ECS_SYSTEM(world, ground_tiles_init, EcsOnAdd, Vector3, tag_terrain_tile);
+
+    // --- Create entities
+    // -- HERO
+    ECS_TYPE(world, g_rendereable_t, rendereable_t);
+//    ecs_type_t enemy = ecs_new(world, g_rendereable_t);
+//    ecs_type_t hero = ecs_new(world, g_rendereable_t);
+
+//    ecs_add(world, hero, tag_hero);
+//    ecs_add(world, enemy, tag_enemy);
+
+    ecs_new_w_count(world, g_rendereable_t, 2);
+
+    ECS_TYPE(world, bullet_t, Vector3, VectorVelocity3, VectorAcceleration3, tag_bullet_idle);
+    ecs_new_w_count(world, bullet_t, 50);
+
+    ECS_TYPE(world, billboard_t, Vector3, tag_billboard);
+    ecs_new_w_count(world, billboard_t, 100);
+
+    ECS_TYPE(world, terrain_tile_t, Vector3, tag_terrain_tile);
+    ecs_new_w_count(world, terrain_tile_t, 25);
+
+    ecs_set_target_fps(world, 60);
+
+    // --- Update Systems
+    ECS_SYSTEM(world, camera_update, 0);
+    ecs_set_system_context(world, camera_update, game_context);
+
+    ECS_SYSTEM(world, sp_assets_animation_update, EcsOnUpdate, 0);
 
     ECS_SYSTEM(world,
             bullets_flying_update,
@@ -205,16 +299,16 @@ void game_world_init(ecs_world_t *world, game_context_t *game_context) {
 
     ecs_set_system_context(world, bullets_idle_update, game_context);
 
+    ECS_SYSTEM(world, hero_controls_update, EcsOnUpdate, rendereable_t, tag_hero);
 
-    ECS_SYSTEM(world, hero_controls_update, EcsOnUpdate, Vector3, VectorVelocity3, sp_asset_t, tag_hero);
-    ecs_set_system_context(world, hero_controls_update, game_context);
-
+    // Render Pipeline
     ECS_SYSTEM(world, pre_render, EcsOnUpdate, 0);
     ecs_set_system_context(world, pre_render, game_context);
     ECS_SYSTEM(world, ground_tiles_render, EcsOnUpdate, Vector3, tag_terrain_tile);
 
     ECS_SYSTEM(world, billboards_back_render, EcsOnUpdate, Vector3, tag_billboard);
     ecs_set_system_context(world, billboards_back_render, game_context);
+    ECS_SYSTEM(world, rendereables_render, EcsOnUpdate, rendereable_t);
 
     ECS_SYSTEM(world, bullets_render, EcsOnUpdate, Vector3, tag_bullet_flying);
     ECS_SYSTEM(world, spine_assets_render, EcsOnUpdate, Vector3, sp_asset_t);
@@ -222,23 +316,10 @@ void game_world_init(ecs_world_t *world, game_context_t *game_context) {
     ECS_SYSTEM(world, billboards_front_render, EcsOnUpdate, Vector3, tag_billboard);
     ecs_set_system_context(world, billboards_front_render, game_context);
 
+
     ECS_SYSTEM(world, post_render, EcsOnUpdate, 0);
     ecs_set_system_context(world, post_render, game_context);
 
-    ECS_ENTITY(world, hero_t, Vector3, VectorVelocity3, sp_asset_t, Texture2D, tag_hero);
-    ECS_TYPE(world, enemy_t, Vector3, VectorVelocity3, sp_asset_t, tag_enemy);
-    ecs_new_w_count(world, enemy_t, 10);
-
-    ECS_TYPE(world, bullet_t, Vector3, VectorVelocity3, VectorAcceleration3, tag_bullet_idle);
-    ecs_new_w_count(world, bullet_t, 50);
-
-    ECS_TYPE(world, billboard_t, Vector3, tag_billboard);
-    ecs_new_w_count(world, billboard_t, 100);
-
-    ECS_TYPE(world, terrain_tile_t, Vector3, tag_terrain_tile);
-    ecs_new_w_count(world, terrain_tile_t, 25);
-
-    ecs_set_target_fps(world, 60);
 }
 
 #endif //RAYLIBTEST_GAME_H

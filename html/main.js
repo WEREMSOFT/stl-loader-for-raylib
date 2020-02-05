@@ -199,7 +199,7 @@ Module['FS_createPath']('/assets', 'hero', true, true);
   }
 
  }
- loadPackage({"files": [{"start": 0, "audio": 0, "end": 79067, "filename": "/assets/images/enemy.png"}, {"start": 79067, "audio": 0, "end": 1445755, "filename": "/assets/images/grass4.png"}, {"start": 1445755, "audio": 0, "end": 1449407, "filename": "/assets/images/lilcloud.png"}, {"start": 1449407, "audio": 0, "end": 1543301, "filename": "/assets/images/grass1.png"}, {"start": 1543301, "audio": 0, "end": 1631506, "filename": "/assets/images/grass3.png"}, {"start": 1631506, "audio": 0, "end": 2460705, "filename": "/assets/images/open-screen.png"}, {"start": 2460705, "audio": 0, "end": 2545866, "filename": "/assets/images/grass2.png"}, {"start": 2545866, "audio": 0, "end": 2894900, "filename": "/assets/images/sky.png"}, {"start": 2894900, "audio": 0, "end": 2945169, "filename": "/assets/images/cloud.png"}, {"start": 2945169, "audio": 0, "end": 3074686, "filename": "/assets/images/tree2.png"}, {"start": 3074686, "audio": 0, "end": 3134200, "filename": "/assets/images/bush.png"}, {"start": 3134200, "audio": 0, "end": 3172369, "filename": "/assets/images/hero2.png"}, {"start": 3172369, "audio": 0, "end": 3281349, "filename": "/assets/images/treee.png"}, {"start": 3281349, "audio": 0, "end": 3324501, "filename": "/assets/images/hero1.png"}, {"start": 3324501, "audio": 0, "end": 3353791, "filename": "/assets/images/hog.png"}, {"start": 3353791, "audio": 0, "end": 3355492, "filename": "/assets/enemy/enemy.atlas"}, {"start": 3355492, "audio": 0, "end": 3467238, "filename": "/assets/enemy/enemy.png"}, {"start": 3467238, "audio": 0, "end": 3479592, "filename": "/assets/enemy/enemy.json"}, {"start": 3479592, "audio": 0, "end": 3480364, "filename": "/assets/shaders/fog.vs"}, {"start": 3480364, "audio": 0, "end": 3482931, "filename": "/assets/shaders/fog.fs"}, {"start": 3482931, "audio": 0, "end": 3677760, "filename": "/assets/dragon/dragon2.png"}, {"start": 3677760, "audio": 0, "end": 3681984, "filename": "/assets/dragon/NewDragon.atlas"}, {"start": 3681984, "audio": 0, "end": 4310521, "filename": "/assets/dragon/dragon.png"}, {"start": 4310521, "audio": 0, "end": 4343483, "filename": "/assets/dragon/NewDragon.json"}, {"start": 4343483, "audio": 0, "end": 5176886, "filename": "/assets/hero/hero.png"}, {"start": 5176886, "audio": 0, "end": 5179028, "filename": "/assets/hero/hero.atlas"}, {"start": 5179028, "audio": 0, "end": 5180989, "filename": "/assets/hero/hero.json"}], "remote_package_size": 5180989, "package_uuid": "a0a7730e-2032-4119-a315-ad1f68bc9d23"});
+ loadPackage({"files": [{"start": 0, "audio": 0, "end": 79067, "filename": "/assets/images/enemy.png"}, {"start": 79067, "audio": 0, "end": 1445755, "filename": "/assets/images/grass4.png"}, {"start": 1445755, "audio": 0, "end": 1449407, "filename": "/assets/images/lilcloud.png"}, {"start": 1449407, "audio": 0, "end": 1543301, "filename": "/assets/images/grass1.png"}, {"start": 1543301, "audio": 0, "end": 1631506, "filename": "/assets/images/grass3.png"}, {"start": 1631506, "audio": 0, "end": 2460705, "filename": "/assets/images/open-screen.png"}, {"start": 2460705, "audio": 0, "end": 2545866, "filename": "/assets/images/grass2.png"}, {"start": 2545866, "audio": 0, "end": 2894900, "filename": "/assets/images/sky.png"}, {"start": 2894900, "audio": 0, "end": 2945169, "filename": "/assets/images/cloud.png"}, {"start": 2945169, "audio": 0, "end": 3074686, "filename": "/assets/images/tree2.png"}, {"start": 3074686, "audio": 0, "end": 3134200, "filename": "/assets/images/bush.png"}, {"start": 3134200, "audio": 0, "end": 3172369, "filename": "/assets/images/hero2.png"}, {"start": 3172369, "audio": 0, "end": 3281349, "filename": "/assets/images/treee.png"}, {"start": 3281349, "audio": 0, "end": 3324501, "filename": "/assets/images/hero1.png"}, {"start": 3324501, "audio": 0, "end": 3353791, "filename": "/assets/images/hog.png"}, {"start": 3353791, "audio": 0, "end": 3355492, "filename": "/assets/enemy/enemy.atlas"}, {"start": 3355492, "audio": 0, "end": 3467238, "filename": "/assets/enemy/enemy.png"}, {"start": 3467238, "audio": 0, "end": 3479592, "filename": "/assets/enemy/enemy.json"}, {"start": 3479592, "audio": 0, "end": 3480364, "filename": "/assets/shaders/fog.vs"}, {"start": 3480364, "audio": 0, "end": 3482931, "filename": "/assets/shaders/fog.fs"}, {"start": 3482931, "audio": 0, "end": 3677760, "filename": "/assets/dragon/dragon2.png"}, {"start": 3677760, "audio": 0, "end": 3681984, "filename": "/assets/dragon/NewDragon.atlas"}, {"start": 3681984, "audio": 0, "end": 4310521, "filename": "/assets/dragon/dragon.png"}, {"start": 4310521, "audio": 0, "end": 4343483, "filename": "/assets/dragon/NewDragon.json"}, {"start": 4343483, "audio": 0, "end": 5176886, "filename": "/assets/hero/hero.png"}, {"start": 5176886, "audio": 0, "end": 5179028, "filename": "/assets/hero/hero.atlas"}, {"start": 5179028, "audio": 0, "end": 5180989, "filename": "/assets/hero/hero.json"}], "remote_package_size": 5180989, "package_uuid": "1d2ad6dc-bed2-47ea-8a26-cf412b5ed040"});
 
 })();
 
@@ -779,8 +779,8 @@ var wasmMemory;
 // In the wasm backend, we polyfill the WebAssembly object,
 // so this creates a (non-native-wasm) table for us.
 var wasmTable = new WebAssembly.Table({
-  'initial': 284,
-  'maximum': 284 + 0,
+  'initial': 288,
+  'maximum': 288 + 0,
   'element': 'anyfunc'
 });
 
@@ -1379,11 +1379,11 @@ function updateGlobalBufferAndViews(buf) {
 }
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 5382944,
+    STACK_BASE = 5383280,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 140064,
-    DYNAMIC_BASE = 5382944,
-    DYNAMICTOP_PTR = 139904;
+    STACK_MAX = 140400,
+    DYNAMIC_BASE = 5383280,
+    DYNAMICTOP_PTR = 140240;
 
 
 
@@ -1799,7 +1799,7 @@ var ASM_CONSTS = {
 
 
 
-// STATICTOP = STATIC_BASE + 139040;
+// STATICTOP = STATIC_BASE + 139376;
 /* global initializers */  __ATINIT__.push({ func: function() { ___wasm_call_ctors() } });
 
 
@@ -5454,7 +5454,7 @@ var ASM_CONSTS = {
     }
 
   function _emscripten_get_sbrk_ptr() {
-      return 139904;
+      return 140240;
     }
 
   

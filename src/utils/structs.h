@@ -31,8 +31,8 @@ typedef struct game_context_t {
 
 typedef struct rendereable_t {
     Vector3 position;
+    unsigned int asset_type;
     void *asset;
-    int asset_type;
 } rendereable_t;
 
 typedef struct sp_asset_t {

@@ -20,7 +20,7 @@
 #include "utils/common.h"
 #include "utils/assets.h"
 
-ecs_world_t* screens[SCREEN_COUNT] = {0};
+ecs_world_t *screens[SCREEN_COUNT] = {0};
 
 // Screens
 #include "screens/game.h"
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Game Jam 2020 Berlin - Rebuild");
     init_assets();
 
-    for(int i = 0; i < SCREEN_COUNT; i++){
+    for (int i = 0; i < SCREEN_COUNT; i++) {
         screens[i] = ecs_init_w_args(argc, argv);
     }
 
@@ -48,16 +48,16 @@ int main(int argc, char *argv[]) {
     game_context = init_game_context();
 
     game_world_init(screens[SCREEN_GAME], &game_context);
-     init_main_menu_world(screens[SCREEN_MAIN_MENU], &game_context);
+    init_main_menu_world(screens[SCREEN_MAIN_MENU], &game_context);
 
-     game_context.world = screens[SCREEN_MAIN_MENU];
+    game_context.world = screens[SCREEN_MAIN_MENU];
 
 #if defined(PLATFORM_WEB)
     emscripten_set_main_loop(game_update, 0, 1);
 #else
     while (ecs_progress(game_context.world, 0) && !WindowShouldClose());
 
-    for(int i = 0; i < SCREEN_COUNT; i++){
+    for (int i = 0; i < SCREEN_COUNT; i++) {
         ecs_fini(screens[i]);
     }
 

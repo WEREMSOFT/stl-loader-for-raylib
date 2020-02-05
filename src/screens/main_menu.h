@@ -53,14 +53,10 @@ static void render_main_menu(ecs_rows_t *rows) {
 
 void init_main_menu_world(ecs_world_t *world, game_context_t *game_context) {
     ECS_COMPONENT(world, Vector3);
-    ECS_TAG(world, tag_redereable);
 
-    ECS_SYSTEM(world, render_main_menu, EcsOnUpdate, tag_redereable);
+    ECS_SYSTEM(world, render_main_menu, EcsOnUpdate, 0);
 
     ecs_set_system_context(world, render_main_menu, game_context);
-
-    // Empty object to trigger the menu drawing
-    ecs_new(world, tag_redereable);
 
     ecs_set_target_fps(world, 60);
 }

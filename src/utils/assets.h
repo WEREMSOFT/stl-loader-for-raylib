@@ -6,8 +6,8 @@
 #define RAYLIBTEST_ASSETS_H
 
 enum SpineAssets {
-    DRAGON,
-    HERO,
+    SPINE_ASSETS_WOLF,
+    SPINE_ASSETS_HERO,
     SPINE_ASSSETS_COUNT,
 };
 
@@ -74,8 +74,8 @@ static sp_asset_t create_sp_asset(char *json_path, char *atlas_path, char *anima
 }
 
 void init_assets() {
-    spine_assets[HERO] = create_sp_asset("assets/hero/hero.json","assets/hero/hero.atlas", "run");
-    spine_assets[DRAGON] = create_sp_asset("assets/enemy/enemy.json","assets/enemy/enemy.atlas", "animation");
+    spine_assets[SPINE_ASSETS_HERO] = create_sp_asset("assets/hero/hero.json","assets/hero/hero.atlas", "run");
+    spine_assets[SPINE_ASSETS_WOLF] = create_sp_asset("assets/enemy/enemy.json","assets/enemy/enemy.atlas", "animation");
     texture_assets[TEXTURES_TREE] = LoadTexture("assets/images/treee.png");
     texture_assets[TEXTURES_TREE2] = LoadTexture("assets/images/tree2.png");
     texture_assets[TEXTURES_BUSH] = LoadTexture("assets/images/bush.png");
