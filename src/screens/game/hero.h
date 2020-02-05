@@ -95,23 +95,4 @@ void enemy_init(ecs_rows_t *rows) {
     }
 }
 
-void rendereables_init(ecs_rows_t *rows) {
-    ECS_COLUMN(rows, rendereable_t, rendereables, 1);
-    ECS_COLUMN_COMPONENT(rows, tag_hero, 2);
-    ECS_COLUMN_COMPONENT(rows, tag_enemy, 3);
-    for (int i = 0; i < rows->count; i++) {
-        if( i < 1){
-            rendereables[i].position = (Vector3) {0, 0, 0};
-            rendereables[i].asset_type = ASSET_TYPE_HERO;
-            rendereables[i].asset = &spine_assets[SPINE_ASSETS_HERO];
-            ecs_add(rows->world, rows->entities[i], tag_hero);
-        } else if (i < 10) {
-            rendereables[i].position = (Vector3) {100, 0, 0};
-            rendereables[i].asset_type = ASSET_TYPE_ENEMY;
-            rendereables[i].asset = &spine_assets[SPINE_ASSETS_WOLF];
-            ecs_add(rows->world, rows->entities[i], tag_enemy);
-        }
-    }
-}
-
 #endif //RAYLIBTEST_HERO_H
