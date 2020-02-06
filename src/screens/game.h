@@ -156,11 +156,9 @@ void process_render_stack(ecs_rows_t *rows) {
     while (stack_pop(render_stack, &rendereable) != -1) {
         switch (rendereable.asset_type) {
             case ASSET_TYPE_HERO:
-                printf("rendering hero\n");
                 drawSkeleton(((sp_asset_t *) rendereable.asset)->skeleton, rendereable.position);
                 break;
             case ASSET_TYPE_ENEMY:
-                printf("rendering enemy\n");
                 drawSkeleton(((sp_asset_t *) rendereable.asset)->skeleton, rendereable.position);
                 break;
             case ASSET_TYPE_BUSH:
@@ -211,7 +209,7 @@ void game_world_init(ecs_world_t *world, game_context_t *game_context) {
     ecs_new(world, g_hero_t);
 
     ECS_TYPE(world, g_enemy_t, rendereable_t, tag_enemy);
-    ecs_new_w_count(world, g_enemy_t, 10);
+    ecs_new_w_count(world, g_enemy_t, 50);
 
     ECS_TYPE(world, g_billboard, rendereable_t, tag_billboard);
     ecs_new_w_count(world, g_billboard, 100);

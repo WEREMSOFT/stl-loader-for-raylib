@@ -5,7 +5,7 @@
 #ifndef RAYLIBTEST_STACK_H
 #define RAYLIBTEST_STACK_H
 
-#define MAX_RENDEREABLES_STACK_SIZE 30
+#define MAX_RENDEREABLES_STACK_SIZE 500
 
 #include <raylib.h>
 
