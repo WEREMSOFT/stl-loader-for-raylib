@@ -1,3 +1,8 @@
+#include <stdlib.h>
+#define DEBUG_MEMORY
+#include "utils/debug.h"
+
+
 #include "raylib.h"
 
 #ifdef PI
