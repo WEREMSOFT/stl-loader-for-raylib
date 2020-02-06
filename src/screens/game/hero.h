@@ -9,9 +9,12 @@
 
 void hero_init(ecs_rows_t *rows) {
     ECS_COLUMN(rows, rendereable_t, rendereables, 1);
+    ECS_COLUMN(rows, rendereables_stack_t, render_stack, 2);
+
+    stack_clean(render_stack);
 
     for (int i = 0; i < rows->count; i++) {
-        rendereables[i].position = (Vector3) {0, 0, 0};
+        rendereables[i].position = (Vector3) {50, 0, 100};
         rendereables[i].asset_type = ASSET_TYPE_HERO;
         rendereables[i].asset = &spine_assets[SPINE_ASSETS_HERO];
     }
@@ -25,11 +28,12 @@ void hero_controls_update(ecs_rows_t *rows) {
     const int speed = 100;
 
     for (int i = 0; i < 1; i++) {
-        sp_asset_t *sp_asset = (sp_asset_t *)rendereables[i].asset;
+        sp_asset_t *sp_asset = (sp_asset_t *) rendereables[i].asset;
         spSkeleton *sp_asset_skeleton = sp_asset->skeleton;
         if (IsKeyDown(KEY_LEFT) || IsGamepadButtonDown(GAMEPAD_PLAYER1, GAMEPAD_BUTTON_LEFT_FACE_LEFT)) {
             rendereables[i].position.x -= speed * rows->delta_time;
-            sp_asset_skeleton->scaleX = sp_asset_skeleton->scaleX > 0 ? -sp_asset_skeleton->scaleX : sp_asset_skeleton->scaleX;
+            sp_asset_skeleton->scaleX =
+                    sp_asset_skeleton->scaleX > 0 ? -sp_asset_skeleton->scaleX : sp_asset_skeleton->scaleX;
             moved = true;
         }
         if (IsKeyDown(KEY_RIGHT) || IsGamepadButtonDown(GAMEPAD_PLAYER1, GAMEPAD_BUTTON_LEFT_FACE_RIGHT)) {
@@ -54,8 +58,8 @@ void hero_controls_update(ecs_rows_t *rows) {
     }
 }
 
-void camera_update(ecs_rows_t *rows){
-    game_context_t *game_context = (game_context_t *)ecs_get_system_context(rows->world, rows->system);
+void camera_update(ecs_rows_t *rows) {
+    game_context_t *game_context = (game_context_t *) ecs_get_system_context(rows->world, rows->system);
     if (IsKeyDown(KEY_A) || IsGamepadButtonDown(GAMEPAD_PLAYER2, GAMEPAD_BUTTON_LEFT_FACE_LEFT)) {
         game_context->camera.position.x -= 100 * rows->delta_time;
         game_context->camera.target.x -= 100 * rows->delta_time;
@@ -74,22 +78,11 @@ void camera_update(ecs_rows_t *rows){
     }
 }
 
-//void enemy_init(ecs_rows_t *rows) {
-//    ECS_COLUMN(rows, Vector3, positions, 1);
-//    ECS_COLUMN(rows, sp_asset_t, sp_assets, 2);
-//
-//    for (int i = 0; i < rows->count; i++) {
-//        positions[i] = (Vector3) {GetRandomValue(500, 2000), 0, GetRandomValue(-100, 300)};
-//        sp_assets[i] = spine_assets[SPINE_ASSETS_WOLF];
-//    }
-//}
-
 void enemy_init(ecs_rows_t *rows) {
     ECS_COLUMN(rows, rendereable_t, rendereables, 1);
 
     for (int i = 0; i < rows->count; i++) {
-//        rendereables[i].position = (Vector3) {GetRandomValue(500, 2000), 0, GetRandomValue(-100, 300)};
-        rendereables[i].position = (Vector3) {100, 0, 0};
+        rendereables[i].position = (Vector3) {GetRandomValue(500, 2000), 0, GetRandomValue(-100, 300)};
         rendereables[i].asset_type = ASSET_TYPE_ENEMY;
         rendereables[i].asset = &spine_assets[SPINE_ASSETS_WOLF];
     }

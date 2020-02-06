@@ -8,6 +8,5 @@
 // Components can't have the same type twice, so we create an alias
 typedef Vector3 VectorVelocity3;
 typedef Vector3 VectorAcceleration3;
-typedef Vector3 position_t;
 
 #endif //RAYLIBTEST_TYPES_H

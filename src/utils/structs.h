@@ -29,12 +29,6 @@ typedef struct game_context_t {
     ecs_world_t *world;
 } game_context_t;
 
-typedef struct rendereable_t {
-    Vector3 position;
-    unsigned int asset_type;
-    void *asset;
-} rendereable_t;
-
 typedef struct sp_asset_t {
     spAtlas *atlas;
     spSkeletonJson *json;
