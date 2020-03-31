@@ -11,6 +11,8 @@
 #include "../utils/stack.h"
 #include "game/hero.h"
 #include <stdlib.h>
+#include <flecs.h>
+#include <flecs/util/stats.h>
 
 /**
  * Sets stuff like background color and camera. Starts the 3D mode.
@@ -176,6 +178,10 @@ void process_render_stack(ecs_rows_t *rows) {
 }
 
 void game_world_init(ecs_world_t *world, game_context_t *game_context) {
+
+    /* Import modules for admin */
+    ECS_IMPORT(world, FlecsStats, 0);
+
     // --- Create Components
     ECS_COMPONENT(world, Vector3);
     ECS_COMPONENT(world, VectorVelocity3);

@@ -19,7 +19,8 @@
 #include "raygui.h"
 
 #include <spine/spine.h>
-#include "flecs.h"
+#include <flecs.h>
+//#include <flecs_systems_admin/flecs_systems_admin.h>
 
 #include "utils/structs.h"
 #include "utils/common.h"
