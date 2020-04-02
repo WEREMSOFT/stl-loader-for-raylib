@@ -10,6 +10,6 @@ link_directories ("${PROJECT_SOURCE_DIR}/lib/static")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OPTIMIZATION_FLAGS} -lflecs_static -lraylib -framework OpenGL -framework GLUT -framework Cocoa -framework CoreVideo -framework IOKit -v")
 
 FILE(GLOB sources src/*)
-FILE(GLOB spine_sources lib/src/spine/*)
-add_executable(raylibtest ${sources} ${spine_sources})
+
+add_executable(raylibtest ${sources})
 target_include_directories(raylibtest PRIVATE lib/include)
